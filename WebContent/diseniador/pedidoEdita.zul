@@ -1,0 +1,86 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Edición del pedido - Agregar diseños"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.diseniador.PedidoEdita')"
+			width="850px" vflex="min">
+		<vlayout vflex="1" hflex="1">
+			<vlayout hflex="1" vflex="1">
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Cliente"/>
+					<textbox 	value="@bind(vm.pedido.cliente.persona.nombreCompleto)"
+								hflex="1" disabled="true"/>
+					<space/>
+				</hlayout>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Observación"/>
+					<textbox 	value="@bind(vm.pedido.observacion)"
+								hflex="1" disabled="true" multiline="true"
+								height="75px"/>
+					<space/>
+				</hlayout>
+			</vlayout>
+			<vlayout hflex="1" height="210px">
+				<listbox model="@bind(vm.diseniosAgregados)" 
+						mold="paging"
+						hflex="1" vflex="1"
+						emptyMessage="No existen datos">
+					<listhead sizable="true">
+						<listheader	label="Nombre"	
+									hflex="min" />
+						<listheader	label="Foto" align="center"	
+									width="170px" />
+						<listheader	label="Crítica"	
+									hflex="1" />
+						<listheader width="150px" align="center">
+							<button width="50px" iconSclass="z-icon-plus" 
+			         				sclass="btn btn-success btn-sm" 
+			         				onClick="@command('nuevoDisenio')"
+			         				tooltiptext="Agregar diseño"/>
+			         		<button width="50px" iconSclass="z-icon-search"  
+									tooltiptext="Buscar diseño existente" 
+									onClick="@command('buscarDisenio')" 
+									sclass="btn btn-info btn-sm" />
+			         	</listheader>
+					</listhead>
+					<template name="model" var="o">
+						<listitem>
+							<listcell label="@load(o.nombre)"/>
+							<listcell>
+								<image 	content="@load(o.firstPhoto)"
+							       		style="border:1px #cccccc solid;" 
+							       		width="150px"/>
+							</listcell>
+							<listcell label="@load(o.critica)"/>
+							<listcell>
+								<button iconSclass="z-icon-pencil" 
+				         				sclass="btn btn-primary btn-sm" 
+				         				onClick="@command('editar', disenio=o)"
+				         				tooltiptext="Editar"
+				         				width="50px"/>
+				         		<button iconSclass="z-icon-trash" 
+				         				sclass="btn btn-danger btn-sm" 
+				         				onClick="@command('eliminar', disenio=o)"
+				         				tooltiptext="Eliminar"
+				         				width="50px"/>
+				         	</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</vlayout>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

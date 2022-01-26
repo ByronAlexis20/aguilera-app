@@ -1,0 +1,91 @@
+<zk xmlns:n="native" xmlns:z="zul">
+	<style>
+		body { 
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana,sans-serif; 
+		}
+		
+		* { 
+			box-sizing: 
+			border-box; 
+		} 
+		
+		.listheader-inventario *{
+			background:#128700;
+			color: white !important;
+		}
+	</style>
+	<vlayout hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.aguilera.control.Dashboard')" style="overflow: scroll">
+		<div class="cardContainer">
+			<label value="Mes: " style="font-weight: bold;"/>
+			<combobox id="cboMes"
+				model="@load(vm.listaMes)" readonly="true"
+				selectedItem="@bind(vm.mesSeleccionado)">
+				<template name="model">
+					<comboitem label="${each.mes}" />
+				</template>
+			</combobox>
+			<label value="Año: " style="font-weight: bold;"/>
+			<textbox id="txtAnio" maxlength="4" xmlns:w="client">
+				<attribute w:name="doKeyPress_">
+					function(evt){ if(this.getValue().length
+					> 0 ){ if (!this._shallIgnore(evt,
+					"0123456789")) this.$doKeyPress_(evt);
+					}else{ if (!this._shallIgnore(evt,
+					"0123456789")) this.$doKeyPress_(evt); }
+					}
+				</attribute>
+			</textbox>
+			<button iconSclass="z-icon-refresh" onClick="@command('actualizar')"/>
+		</div>
+		<div class="row">
+			<div class="col-md-6" height="300px" >
+				<vlayout hflex="1" vflex="1">
+					<label id="lblVentas" style="font-size:15px;font-weight: bold;" />
+					<image id="imGraficaVentas" vflex="1" hflex="1"/>
+				</vlayout>
+			</div>
+			<div class="col-md-6" height="300px">
+				<vlayout hflex="1" vflex="1">
+					<label id="lblPastelPorcentajeCategoria" style="font-size:15px;font-weight: bold;" />
+					<image id="imPorcentajeVentaCategoria" vflex="1" hflex="1"/>
+				</vlayout>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6" height="300px" >
+				<vlayout hflex="1" vflex="1">
+					<label id="lblVentasTalla" style="font-size:15px;font-weight: bold;" />
+					<image id="imGraficaVentasTalla" vflex="1" hflex="1"/>
+				</vlayout>
+			</div>
+			<div class="col-md-6" height="300px" >
+				<vlayout hflex="1" vflex="1">
+					<label value="Inventario de productos" style="font-size:15px;font-weight: bold;" />
+					<listbox model="@load(vm.listaProductos)"
+						hflex="1" height="200px">
+						<listhead>
+							<listheader label="Producto" class="listheader-vehiculo"/>
+							<listheader label="Desc." class="listheader-vehiculo"/>
+							<listheader label="Stock." width="13%" class="listheader-vehiculo"/>
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell label="@load(each.nombre)" />
+								<listcell label="@load(each.descripcion)" />
+								<listcell label="@load(each.stock)" />
+							</listitem>
+						</template>
+					</listbox>
+				</vlayout>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6" height="250px" >
+				<vlayout hflex="1" vflex="1">
+					<label id="lblCitas" style="font-size:15px;font-weight: bold;" />
+					<image id="imGraficaCitas" vflex="1" hflex="1"/>
+				</vlayout>
+			</div>
+		</div>
+	</vlayout>
+</zk>

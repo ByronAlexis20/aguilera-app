@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_factura" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2e4069d-fdd1-4a44-b65a-467339f8bf22">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AGUILERA_APP"/>
+	<parameter name="__RUTA_LOGO__" class="java.lang.String"/>
+	<parameter name="__TIPO_PRODUCTO__" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 	p.nombre AS nombre,
+        p.descripcion AS descripcion,
+        p.stock AS stock,
+        p.precio AS precio
+FROM da_producto AS p
+WHERE 	p.estado IS NULL AND
+				p.tipo_producto = $P{__TIPO_PRODUCTO__}]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="da_producto"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="da_producto"/>
+	</field>
+	<field name="stock" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="stock"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="da_producto"/>
+	</field>
+	<field name="precio" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="da_producto"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="1" width="80" height="72" uuid="26fcc607-c920-4bad-b51d-6b3dc2acaa81"/>
+				<imageExpression><![CDATA[$P{__RUTA_LOGO__}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="80" y="0" width="430" height="22" uuid="7eab7804-004a-4c2a-a015-a5fac0b77343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISEÑOS AGUILERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="23" width="430" height="22" uuid="c1b925d0-2fda-4d48-b813-1fa1c6a9f252"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SANTA ELENA - ECUADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="46" width="430" height="35" uuid="bd37055b-8ae1-414c-9667-2d5cf5532ed1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[correo: daguilera@gmail.com
+teléfono: 0978654321]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="12" width="528" height="30" uuid="77e4cea5-feef-4141-bffb-c3840a74eb35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["INVENTARIO - " + (IF(EQUALS($P{__TIPO_PRODUCTO__}, "T"),"TELAS", "HILOS"))]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="170" height="22" uuid="ea3fd668-ec5e-43bc-887c-27e322067b2d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="10" width="198" height="22" uuid="cde8b5b7-ae7c-44e2-a022-9fde3d6691cd"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="10" width="80" height="22" uuid="3afcf889-db7e-4a57-8248-066bf11d7de0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="10" width="80" height="22" uuid="25194d2f-734e-4794-bf21-5b64c31b65e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="10" y="0" width="170" height="22" uuid="21d8f9f9-59a8-4c26-afc8-9c6167e5122f">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[IF(($F{stock} < 5),"<style isBold='true' forecolor='#C70039'>" + $F{nombre} + "</style>", $F{nombre} )]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="ContainerHeight" x="180" y="0" width="198" height="22" uuid="4c40328e-371a-45cd-95b5-f14c5dc7577c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[IF(($F{stock} < 5),"<style isBold='true' forecolor='#C70039'>" + $F{descripcion} + "</style>", $F{descripcion} )]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="ContainerHeight" x="378" y="0" width="80" height="22" uuid="099f426e-a1df-40ff-8e47-a80206aa2795">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$ " + IF(($F{stock} < 5),"<style isBold='true' forecolor='#C70039'>" + String.format("%.2f", (double)$F{precio}) + "</style>", String.format("%.2f", (double)$F{precio}) )]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="ContainerHeight" x="458" y="0" width="80" height="22" uuid="65484ef2-ffcc-4921-81a0-0cebc06b60d3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[IF(($F{stock} < 5),"<style isBold='true' forecolor='#C70039'>" + $F{stock} + "</style>", $F{stock} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

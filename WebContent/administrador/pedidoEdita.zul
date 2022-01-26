@@ -1,0 +1,47 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Creación de pedido"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.administrador.PedidoEdita')"
+			width="850px" vflex="min">
+		<vlayout vflex="1" hflex="1">
+			<vlayout hflex="1" vflex="1">
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Cliente"/>
+					<combobox 	model="@load(vm.clientes)"
+								selectedItem="@bind(vm.pedido.cliente)"
+								value="@load(vm.pedido.cliente.persona.nombreCompleto)"
+								onChanging="@command(event.changingBySelectBack ? null:'buscarCliente', textoBuscar=event.value)"
+								instant="false" autodrop="true" hflex="1"
+								onCancel="@command('cancelar')">
+						<template name="model" var="c">
+							<comboitem label="@load(c.persona.nombreCompleto)" value="@load(c)"
+								description="@load(c.persona.identificacion)" />
+						</template>
+					</combobox>
+					<space/>
+				</hlayout>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Observación"/>
+					<textbox 	value="@bind(vm.pedido.observacion)"
+								maxlength="200" multiline="true"
+								hflex="1" height="75px"/>
+					<space/>
+				</hlayout>
+			</vlayout>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

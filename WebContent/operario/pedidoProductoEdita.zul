@@ -1,0 +1,91 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Selección de Productos"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.operario.PedidoProductoEdita')"
+			width="500px" height="80%">
+		<vlayout vflex="1" hflex="1">
+			<listbox id="lstDatos" 
+					 model="@bind(vm.pedido.pedidoProductos) @template(each.id eq vm.idEnEdicion ? 'editando' : 'porEditar')" 
+			         hflex="1" vflex="1" focus="true" 
+			         mold="paging"
+			         emptyMessage="No existen datos!">
+		         <listhead sizable="true">
+		         	<listheader label="Producto" 
+		         				hflex="1"/>	         				
+		         	<listheader label="Cantidad" 
+		         				hflex="min" align="center"/>
+		         	<listheader width="80px" align="center">
+		         		<button iconSclass="z-icon-plus" 
+		         				sclass="btn btn-success btn-sm" 
+		         				onClick="@command('nuevoProducto')"
+		         				tooltiptext="Nuevo"/>
+		         	</listheader>
+		         </listhead>
+		         
+		         <!--  Plantilla para elementos por editar -->
+		         <template name="porEditar" var="p">
+		         	<listitem>
+		         		<listcell label="@bind(p.producto.nombre)" />
+		         		<listcell label="@bind(p.cantidad)" />
+		         		<listcell>
+		         			<div>
+				         		<button iconSclass="z-icon-trash" 
+				         				sclass="btn btn-danger btn-sm" 
+				         				onClick="@command('eliminarProducto', pedidoProducto=p)"
+				         				tooltiptext="Quitar"/>
+			         		</div>
+		         		</listcell>
+		         	</listitem>
+		         </template>
+		         
+		         <!-- Plantilla para elementos editables -->
+		         <template name="editando" var="p">
+		         	<listitem>
+		         		<listcell>
+		         			<hlayout>
+		         				<combobox 	model="@load(vm.productos)"
+											selectedItem="@bind(vm.pedidoProducto.producto)"
+											value="@load(vm.pedidoProducto.producto.nombre)"
+											onChanging="@command(event.changingBySelectBack ? null:'buscarProductos', textoBuscar=event.value)"
+											instant="false" autodrop="true" hflex="1"
+											onCancel="@command('cancelarProducto')">
+									<template name="model" var="c">
+										<comboitem label="@load(c.nombre)" value="@load(c)"
+											description="@load(c.stock)" />
+									</template>
+								</combobox>
+		         			</hlayout>
+		         		</listcell>
+		         		<listcell>
+		         			<intbox value="@bind(vm.pedidoProducto.cantidad)"/>
+		         		</listcell>
+		         		<listcell>
+				         		<button iconSclass="z-icon-save" 
+				         				sclass="btn btn-success btn-sm" 
+				         				onClick="@command('aceptarProducto')" 
+				         				tooltiptext="Aceptar"/>
+				         		<button iconSclass="z-icon-sign-out" 
+				         				sclass="btn btn-secondary btn-sm" 
+				         				onClick="@command('cancelarProducto')"
+				         				tooltiptext="Salir"/>
+		         		</listcell>
+		         	</listitem>
+		         </template>
+			</listbox>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

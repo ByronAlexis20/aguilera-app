@@ -1,0 +1,126 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+    			apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.administrador.ProductoLista')">
+    
+		<!-- Patron de busqueda -->
+		<hlayout valign="middle" hflex="1" vflex="min">
+			<combobox selectedItem="@bind(vm.tipoBuscar)"
+					  placeholder="Tipo de producto...">
+    			<comboitem value="T" label="Telas"/>
+    			<comboitem value="H" label="Hilos"/>
+    		</combobox>
+			<textbox 	value="@bind(vm.textoBuscar)"
+						placeholder="escriba aqui el texto..." 
+						hflex="1"
+						onOK="@command('buscar')"/>
+			<button iconSclass="z-icon-search"  
+					tooltiptext="Buscar" onClick="@command('buscar')" 
+					sclass="btn btn-primary btn-sm" />
+		</hlayout>
+		
+		<!-- Resultado de la busqueda -->
+		
+		<listbox id="lstDatos" 
+				 model="@bind(vm.productos) @template(each.id eq vm.idEnEdicion ? 'editando' : 'porEditar')" 
+		         hflex="1" vflex="1" focus="true" 
+		         mold="paging"
+		         emptyMessage="No existen datos!">
+	         <listhead sizable="true">
+	         	<listheader label="Nombre" 
+	         				hflex="1"
+	         				sort="auto(nombre)"/>
+	         	<listheader label="Descripción" 
+	         				hflex="1"/>
+	         	<listheader label="Tipo" align="center" 
+	         				hflex="min"/>
+	         	<listheader label="Stock" 
+	         				hflex="min" align="center"
+	         				sort="auto(stock)"/>
+	         	<listheader label="Precio" 
+	         				hflex="min" align="center"
+	         				sort="auto(precio)"/>
+	         	<listheader width="120px"	align="center">
+	         		<button iconSclass="z-icon-plus" 
+	         				sclass="btn btn-success btn-sm" 
+	         				onClick="@command('nuevo')"
+	         				tooltiptext="Nuevo"/>
+	         	</listheader>
+	         </listhead>
+	         
+	         <!--  Plantilla para elementos por editar -->
+	         <template name="porEditar" var="p">
+	         	<listitem onDoubleClick="@command('editar', producto=p)" 
+	         	          onClick="@command(vm.producto eq null?null:'cancelar')">
+	         	    <listcell label="@bind(p.nombre)" style="@load(p.style)"/>
+	         		<listcell label="@bind(p.descripcion)" style="@load(p.style)"/>
+	         		<listcell label="@bind(p.tipoTexto)" style="@load(p.style)"/>
+	         		<listcell label="@bind(p.stock)" style="@load(p.style)"/>
+	         		<listcell label="@bind(p.precio) @converter('formatedNumber', format='###,##0.00')" style="@load(p.style)"/> 
+	         		<listcell >
+	         			<div>
+			         		<button iconSclass="z-icon-edit" 
+			         				sclass="btn btn-primary btn-sm" 
+			         				onClick="@command('editar', producto=p)"
+			         				tooltiptext="Editar"/>
+			         		<button iconSclass="z-icon-shopping-cart" 
+			         				sclass="btn btn-warning btn-sm" 
+			         				onClick="@command('agregarCompra', producto=p)" 
+			         				tooltiptext="Agregar compra"/>
+			         		<button iconSclass="z-icon-trash" 
+			         				sclass="btn btn-danger btn-sm" 
+			         				onClick="@command('eliminar', producto=p)"
+			         				tooltiptext="Eliminar"/>
+		         		</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+	         
+	         <!-- Plantilla para elementos editables -->
+	         <template name="editando" var="c">
+	         	<listitem>
+	         		<listcell>
+	         			<textbox value="@bind(vm.producto.nombre)"
+	         					 constraint="no empty" hflex="1"
+	         					 focus="true" maxlength="45"
+	         					 onCancel="@command('cancelar')"/>
+	         		</listcell>
+	         		<listcell>
+	         			<textbox value="@bind(vm.producto.descripcion)"
+	         					 multiline="true" hflex="1" height="50px"
+	         					 maxlength="100"
+	         					 onCancel="@command('cancelar')"/>
+	         		</listcell>
+	         		<listcell>
+	         			<combobox selectedItem="@bind(vm.producto.tipoProducto)"
+								  placeholder="Tipo de producto...">
+			    			<comboitem value="T" label="Telas"/>
+			    			<comboitem value="H" label="Hilos"/>
+			    		</combobox>
+	         		</listcell>
+	         		<listcell>
+	         			<intbox value="@load(vm.producto.stock)"
+	         					width="50px"
+	         					disabled="true"/>
+	         		</listcell>
+	         		<listcell>
+	         			<doublebox 	value="@load(vm.producto.precio)"
+	         						width="50px" format="###,##0.00"
+	         						disabled="true"/>
+	         		</listcell>
+	         		<listcell>
+			         		<button iconSclass="z-icon-save" 
+			         				sclass="btn btn-success btn-sm" 
+			         				onClick="@command('aceptar')" 
+			         				tooltiptext="Aceptar"/>
+			         		<button iconSclass="z-icon-sign-out" 
+			         				sclass="btn btn-secondary btn-sm" 
+			         				onClick="@command('cancelar')"
+			         				tooltiptext="Salir"/>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+		</listbox>
+	</vlayout>
+</zk>

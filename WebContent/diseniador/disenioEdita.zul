@@ -1,0 +1,90 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Edición de Diseño"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.diseniador.DisenioEdita')"
+			width="850px" vflex="min">
+		<vlayout vflex="1" hflex="1">
+			<vlayout hflex="1" vflex="1">
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Nombre"/>
+					<textbox 	value="@bind(vm.disenio.nombre)"
+								hflex="1" maxlength="60"
+								constraint="no empty"/>
+					<space/>
+				</hlayout>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Precio"/>
+					<doublebox 	value="@bind(vm.disenio.precio)"
+								format="###,##0.00"
+								constraint="no empty, no zero, no negative"/>
+					<space/>
+				</hlayout>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Diseñador"/>
+					<textbox 	value="@bind(vm.disenio.diseniador)"
+								hflex="1" disabled="true"/>
+					<space/>
+					<label 	value="Registro"/>
+					<textbox 	value="@bind(vm.disenio.fechaRegistro)"
+								hflex="1" disabled="true"/>
+					<space/>
+				</hlayout>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Descripción"/>
+					<textbox 	value="@bind(vm.disenio.descripcion)"
+								maxlength="100" multiline="true"
+								height="50px" hflex="1"/>
+				</hlayout>
+			</vlayout>
+			<vlayout hflex="1" height="210px">
+				<listbox model="@bind(vm.fotosAgregadas)" 
+						mold="paging"
+						hflex="1" vflex="1"
+						emptyMessage="No existen datos">
+					<listhead sizable="true">
+						<listheader	label="Fotos"	
+									hflex="1" align="center"/>
+						<listheader width="150px" align="center">
+			         		<button label="Foto"
+						    		upload="true,maxsize=4096,accept=image/bmp|image/jpeg|image/gif" 
+									onUpload="@command('subirFoto')"
+									iconSclass="z-icon-upload"  
+									sclass="btn btn-success btn-sm"
+									tooltiptext="Agregar foto de tamaño máximo 4MB"/>
+			         	</listheader>
+					</listhead>
+					<template name="model" var="o">
+						<listitem>
+							<listcell>
+								<image 	content="@load(o.image)"
+							       		style="border:1px #cccccc solid;" 
+							       		height="150px"/>
+							</listcell>
+							<listcell>
+				         		<button iconSclass="z-icon-trash" 
+				         				sclass="btn btn-danger btn-sm" 
+				         				onClick="@command('eliminar', foto=o)"
+				         				tooltiptext="Eliminar"
+				         				width="50px"/>
+				         	</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</vlayout>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

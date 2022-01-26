@@ -1,0 +1,87 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Registro de Compra"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.administrador.CompraEdita')"
+			width="40%" vflex="min">
+		<vlayout vflex="min" hflex="1">
+			<grid hflex="1" height="350px">
+				<columns>
+					<column hflex="min"/>
+					<column hflex="1"/>
+				</columns>
+				<rows>
+					<row>
+						<label value="Producto"/>
+						<label value="@load(vm.compra.producto.nombre)"/>
+					</row>
+					<row>
+						<label value="Factura N°"/>
+						<textbox value="@bind(vm.compra.numeroFactura)"
+								 constraint="no empty" maxlength="45"/>
+					</row>
+					<row>
+						<label value="Fecha de compra"/>
+						<datebox value="@bind(vm.compra.fechaCompra)"
+								 constraint="no empty" format="dd/MM/yyyy"/>
+					</row>
+					<row>
+						<label value="RUC"/>
+						<textbox value="@bind(vm.compra.rucProveedor)"
+								 constraint="no empty" maxlength="13"/>
+					</row>
+					<row>
+						<label value="Proveedor"/>
+						<textbox value="@bind(vm.compra.nombreProveedor)"
+								 constraint="no empty" maxlength="100" hflex="1"/>
+					</row>
+					<row>
+						<label value="Cantidad"/>
+						<intbox value="@bind(vm.compra.cantidad)" width="100px"
+								constraint="no empty, no zero, no negative"
+								onChange="@command('calcularValores')"/>
+					</row>
+					<row>
+						<label value="Precio"/>
+						<doublebox 	value="@bind(vm.compra.precioUnitario)" width="100px"
+									constraint="no empty, no zero, no negative"
+									onChange="@command('calcularValores')"
+									format="###,##0.00"/>
+					</row>
+					<row>
+						<label value="Subtotal"/>
+						<doublebox 	value="@bind(vm.compra.subtotal)" width="100px"
+									format="###,##0.00"
+									disabled="true"/>
+					</row>
+					<row>
+						<label value="IVA (14%)"/>
+						<doublebox 	value="@bind(vm.compra.iva)" width="100px"
+									format="###,##0.00"
+									disabled="true"/>
+					</row>
+					<row>
+						<label value="Total"/>
+						<doublebox 	value="@bind(vm.compra.total)" width="100px"
+									format="###,##0.00"
+									disabled="true"/>
+					</row>
+				</rows>
+			</grid>
+			<separator/>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

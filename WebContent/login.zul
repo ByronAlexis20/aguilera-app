@@ -1,0 +1,86 @@
+<?page title="Diseños Aguilera" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/img/icono.ico"?>
+<?link rel="icon" type="image/x-icon" href="/img/icono.ico"?>
+<?script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/font-awesome/5.12.0/css/font-awesome.min.css" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" ?>
+<zk>
+<style>		
+    body {
+           padding: 0 0 0 0; 
+           background-size:cover;
+          }
+    .z-window-content {
+           padding: 0 0 0 0; 
+    }
+</style>
+<window id="wnLogin" 
+        border="none"
+        height="100%" width="100%"
+        position="parent"
+        mode="embedded"
+        sclass="p-0"
+	    apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('is') @init('com.aguilera.control.Login')" >
+	<div hflex="1" vflex="1" sclass="p-0">
+		<image src="/img/fondo.jpg" hflex="1" vflex="1" />
+	</div>
+	<window border="rounded"
+	        width="280px"
+	        position="center"
+	        sclass="b-0 p-0"
+	        mode="overlapped">
+		<div align="center" sclass="p-3">
+			<hlayout valign="middle">
+				<image src="/img/icono.png" height="150px"/>
+			</hlayout>
+			<separator/>
+			<h:form id="f" name="f"
+					action="procesaAutenticacion" 
+					method="POST"
+					xmlns:h="native">
+				<vbox hflex="1" vflex="min" align="center" pack="center">
+					
+					<hlayout hflex="min" vflex="min">
+						<button iconSclass="z-icon-user" 
+								disabled="true"
+								width="60px"/>
+						<textbox 	id="u"
+									name="usuario"
+									placeholder="usuario..."/>
+					</hlayout>
+					<hlayout hflex="min" vflex="min">
+						<button iconSclass="z-icon-lock" 
+								disabled="true"
+								width="60px"/>
+						<textbox 	id="p" 
+									type="password" 
+									name="clave"
+									placeholder="clave..."/>
+					</hlayout>
+					<hbox 	hflex="1" vflex="min"
+							align="center" pack="center">
+						<label value="Recordarme"/>
+						<checkbox	id="r"
+									name="_spring_security_remember_me"/>
+					</hbox>
+					<html>
+						<input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					</html>
+					<div align="center">
+						<button id="login"
+								label="Ingresar"
+								type="submit"
+								iconSclass="z-icon-sign-in"
+								sclass="btn btn-primary btn-sm"/>
+					</div>
+					<html style="color:red" if="${not empty param.login_error}">
+				      <label>Credenciales inválidas</label>
+					</html>
+					<a label="Registrarse" onClick="@command('registrarse')"/>
+				</vbox>
+			</h:form>
+		</div>
+	</window>
+</window>
+</zk>

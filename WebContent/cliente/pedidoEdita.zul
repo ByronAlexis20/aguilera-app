@@ -1,0 +1,94 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Edición del pedido - Evaluar diseños"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.cliente.PedidoEdita')"
+			width="80%" height="90%">
+		<vlayout vflex="1" hflex="1">
+			<vlayout hflex="1" vflex="min">
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Observación"/>
+					<textbox 	value="@bind(vm.pedido.observacion)"
+								hflex="1" disabled="true" multiline="true"
+								height="75px"/>
+					<space/>
+				</hlayout>
+			</vlayout>
+			<separator/>
+			<vlayout hflex="1" vflex="1">
+				<listbox model="@bind(vm.pedido.pedidoDisenios)" 
+						mold="paging"
+						hflex="1" vflex="1"
+						emptyMessage="No existen datos">
+					<listhead sizable="true">
+						<listheader	label="Nombre"	
+									hflex="min" />
+						<listheader	label="Foto" align="center"	
+									width="170px" />
+						<listheader	label="Crítica"	
+									hflex="1" />
+						<listheader	label="Precio" align="center"
+									hflex="min" />
+						<listheader	label="Cantidad" align="center"	
+									hflex="min" />
+						<listheader width="200px" align="center" />
+					</listhead>
+					<template name="model" var="o">
+						<listitem>
+							<listcell label="@load(o.disenio.nombre)"/>
+							<listcell>
+								<image 	content="@load(o.disenio.firstPhoto)"
+							       		style="border:1px #cccccc solid;" 
+							       		width="150px"/>
+							</listcell>
+							<listcell>
+								<textbox value="@bind(o.critica)"
+										 hflex="1" height="75px"
+										 maxlength="200" multiline="true"
+										 disabled="@load(!o.devuelto)"/>
+							</listcell>
+							<listcell label="@load(o.disenio.precio) @converter('formatedNumber', format='###,##0.00')"/>
+							<listcell>
+								<intbox value="@bind(o.cantidad)"
+										 disabled="@load(!o.aprobado)"
+										 width="50px"/>
+							</listcell>
+							<listcell>
+								<button iconSclass="z-icon-eye" 
+				         				sclass="btn btn-info btn-sm" 
+				         				onClick="@command('ver', disenio=o.disenio)"
+				         				tooltiptext="Ver"
+				         				width="50px"/>
+				         		<button iconSclass="z-icon-check" 
+				         				sclass="btn btn-success btn-sm" 
+				         				onClick="@command('aprobar', disenio=o)"
+				         				tooltiptext="Aprobar"
+				         				width="50px"
+				         				disabled="@load(!o.creado)"/>
+				         		<button iconSclass="z-icon-times" 
+				         				sclass="btn btn-danger btn-sm" 
+				         				onClick="@command('rechazar', disenio=o)"
+				         				tooltiptext="Rechazar"
+				         				width="50px"
+				         				disabled="@load(!o.creado)"/>
+				         	</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</vlayout>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

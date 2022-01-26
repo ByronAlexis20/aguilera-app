@@ -1,0 +1,95 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+    			apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.administrador.PrivilegioLista')">
+    
+		<!-- Patron de busqueda -->
+		<hlayout valign="middle" hflex="1" vflex="min">
+			<textbox 	value="@bind(vm.textoBuscar)" 
+						placeholder="escriba aqui el texto..." hflex="1" 
+						onOK="@command('buscar')" />
+			<button width="50px" iconSclass="z-icon-search"  
+					tooltiptext="Buscar" onClick="@command('buscar')" 
+					sclass="btn btn-primary btn-sm" />
+		</hlayout>
+		
+		<!-- Resultado de la busqueda -->
+		
+		<listbox id="lstDatos" 
+				 model="@bind(vm.privilegios) @template(each.id eq vm.idEnEdicion ? 'editando' : 'porEditar')" 
+		         hflex="1" vflex="1" focus="true" 
+		         mold="paging"
+		         emptyMessage="No existen datos">
+	         <listhead sizable="true">
+	         	<listheader label="Código"      
+	         				hflex="min" 
+	         				sort="auto(codigo)"/>
+	         	<listheader label="Descripción" 
+	         				hflex="1"
+	         				sort="auto(descripcion)"/>
+	         	<listheader width="150px" align="center">
+	         		<button iconSclass="z-icon-plus" 
+	         				sclass="btn btn-success btn-sm" 
+	         				onClick="@command('nuevo')"
+	         				tooltiptext="Nuevo"
+	         				width="50px"/>
+	         	</listheader>
+	         </listhead>
+	         
+	         <!--  Plantilla para elementos por editar -->
+	         <template name="porEditar" var="p">
+	         	<listitem onDoubleClick="@command('editar', privilegio=p)" 
+	         	          onClick="@command(vm.privilegio eq null?null:'cancelar')">
+	         		<listcell label="@bind(p.codigo)" /> 
+	         		<listcell label="@bind(p.descripcion)" />
+	         		<listcell >
+	         			<div>
+			         		<button iconSclass="z-icon-edit" 
+			         				sclass="btn btn-primary btn-sm" 
+			         				onClick="@command('editar', privilegio=p)"
+			         				tooltiptext="Editar"
+			         				width="50px"/>
+			         		<button iconSclass="z-icon-trash" 
+			         				sclass="btn btn-danger btn-sm" 
+			         				onClick="@command('eliminar', privilegio=p)"
+			         				tooltiptext="Eliminar"
+			         				width="50px"/>
+		         		</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+	         
+	         <!-- Plantilla para elementos editables -->
+	         <template name="editando" var="p">
+	         	<listitem>
+	         		<listcell>
+	         			<textbox value="@bind(vm.privilegio.codigo)" 
+	         					 maxlength="45" hflex="1" 
+	         					 focus="true" 
+	         					 onCancel="@command('cancelar')"
+	         					 constraint="no empty"/>
+	         		</listcell> 
+	         		<listcell>
+	         			<textbox value="@bind(vm.privilegio.descripcion)" maxlength="100"  hflex="1"
+	         					 onOK="@command('aceptar')" 
+	         					 onCancel="@command('cancelar')"
+	         					 constraint="no empty"/>
+	         		</listcell> 
+	         		<listcell>
+			         		<button iconSclass="z-icon-save" 
+			         				sclass="btn btn-success btn-sm" 
+			         				onClick="@command('aceptar')" 
+			         				tooltiptext="Aceptar"
+			         				width="50px"/>
+			         		<button iconSclass="z-icon-sign-out" 
+			         				sclass="btn btn-secondary btn-sm" 
+			         				onClick="@command('cancelar')"
+			         				tooltiptext="Cancelar"
+			         				width="50px"/>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+		</listbox>
+	</vlayout>
+</zk>

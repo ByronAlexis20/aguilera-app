@@ -1,0 +1,102 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+    			apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.administrador.ReporteEdita')">
+		<hlayout vflex="1" hflex="1">
+			<vlayout hflex="2" vflex="1">
+				<groupbox title="Cambios por pedido" hflex="1" vflex="min">
+					<hlayout hflex="1" vflex="min" valign="middle">
+						<label value="Desde: "/>
+						<datebox value="@bind(vm.fechaDesdeRep1)"
+								 format="dd/MM/yyyy"/>
+						<space/>
+						<label value="Hasta: "/>
+						<datebox value="@bind(vm.fechaHastaRep1)"
+								 format="dd/MM/yyyy"/>
+						<space/>
+						<button iconSclass="z-icon-print" 
+								onClick="@command('generarReportePedido')"
+								sclass="btn btn-info btn-sm"/>
+					</hlayout>
+				</groupbox>
+				<groupbox title="Ventas" hflex="1" vflex="min">
+					<hlayout hflex="1" vflex="min" valign="middle">
+						<groupbox title="Por meses" hflex="1" vflex="1">
+							<hlayout hflex="1" vflex="min" valign="middle">
+								<label value="Año: "/>
+								<intbox value="@bind(vm.anioRep2)" maxlength="4" hflex="1"/>
+								<space/>
+								<button iconSclass="z-icon-print" 
+										onClick="@command('generarReporteVentasMeses')"
+										sclass="btn btn-info btn-sm"/>
+							</hlayout>
+						</groupbox>
+						<groupbox title="Por años" hflex="2" vflex="1">
+							<hlayout hflex="1" vflex="min" valign="middle">
+								<label value="Desde: "/>
+								<intbox value="@bind(vm.anioDesdeRep2)" maxlength="4" hflex="1"/>
+								<space/>
+								<label value="Hasta: "/>
+								<intbox value="@bind(vm.anioHastaRep2)" maxlength="4" hflex="1"/>
+								<space/>
+								<button iconSclass="z-icon-print" 
+										onClick="@command('generarReporteVentasAnios')"
+										sclass="btn btn-info btn-sm"/>
+							</hlayout>
+						</groupbox>
+					</hlayout>
+				</groupbox>
+				<groupbox title="Inventario" hflex="1" vflex="min">
+					<hlayout hflex="1" vflex="min" valign="middle">
+						<combobox selectedItem="@bind(vm.tipoProductoRep3)"
+								  placeholder="Tipo de producto...">
+			    			<comboitem value="T" label="Telas"/>
+			    			<comboitem value="H" label="Hilos"/>
+			    		</combobox>
+			    		<space/>
+						<button iconSclass="z-icon-print" 
+								onClick="@command('generarReporteInventario')"
+								sclass="btn btn-info btn-sm"/>
+					</hlayout>
+				</groupbox>
+				<groupbox title="Productos más vendidos" hflex="1" vflex="min">
+					<vlayout hflex="1" vflex="min">
+						<groupbox title="Por fechas" hflex="1" vflex="1">
+							<hlayout hflex="1" vflex="min" valign="middle">
+								<label value="Desde: "/>
+								<datebox value="@bind(vm.fechaDesdeRep5)"
+										 format="dd/MM/yyyy"/>
+								<space/>
+								<label value="Hasta: "/>
+								<datebox value="@bind(vm.fechaHastaRep5)"
+										 format="dd/MM/yyyy"/>
+								<space/>
+								<button iconSclass="z-icon-print" 
+										onClick="@command('generarProductosCategoria')"
+										sclass="btn btn-info btn-sm"/>
+							</hlayout>
+						</groupbox>
+						<groupbox title="Por Talla" hflex="1" vflex="1">
+							<hlayout hflex="1" vflex="min" valign="middle">
+								<label value="Desde: "/>
+								<datebox value="@bind(vm.fechaDesdeRep6)"
+										 format="dd/MM/yyyy"/>
+								<space/>
+								<label value="Hasta: "/>
+								<datebox value="@bind(vm.fechaHastaRep6)"
+										 format="dd/MM/yyyy"/>
+								<space/>
+								<button iconSclass="z-icon-print" 
+										onClick="@command('generarProductosTalla')"
+										sclass="btn btn-info btn-sm"/>
+							</hlayout>
+						</groupbox>
+					</vlayout>
+				</groupbox>
+			</vlayout>
+			<iframe vflex="1" src="@load(vm.rutaReporte)" 
+					hflex="3" style="border: 1px solid gray" />
+		</hlayout>
+	</vlayout>
+</zk>

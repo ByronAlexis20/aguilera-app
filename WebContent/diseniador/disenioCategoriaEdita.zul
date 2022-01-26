@@ -1,0 +1,46 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Selección de Categorias"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.diseniador.DisenioCategoriaEdita')"
+			width="300px" vflex="min">
+		<vlayout vflex="1" hflex="1">
+			<listbox model="@load(vm.categorias)" 
+					 hflex="1" vflex="1"
+					 focus="true" 
+		         	 mold="paging"
+		         	 multiple="true"
+		         	emptyMessage="No existen datos">
+				<listhead>
+					<listheader hflex="min"/>
+					<listheader label="Nombre" 			
+								hflex="min"/>
+					<listheader label="Descripcion" 
+								hflex="1"/>
+				</listhead>
+		         <template name="model" var="c">
+		         	<listitem>
+		         		<listcell>
+		         			<checkbox checked="@bind(c.seleccionado)"/>
+		         		</listcell>
+		         		<listcell label="@bind(c.nombre)" />
+		         		<listcell label="@bind(c.descripcion)" />
+		         	</listitem>
+		         </template>
+			</listbox>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

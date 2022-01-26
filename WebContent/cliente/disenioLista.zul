@@ -1,0 +1,68 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+				apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.cliente.DisenioLista')">
+		<!-- Patron de busqueda -->
+		<hlayout valign="middle" hflex="1" vflex="min">
+			<combobox 	model="@load(vm.categorias)"
+						selectedItem="@bind(vm.categoria)"
+						value="@load(vm.categoria.nombre)"
+						placeholder="Categorias...">
+				<template name="model">
+					<comboitem 	label="@load(each.nombre)" 
+								value="@load(each)"/>
+				</template>
+			</combobox>
+			<textbox 	value="@bind(vm.textoBuscar)"
+						placeholder="escriba aqui el texto..." 
+						hflex="1"
+						onOK="@command('buscar')"/>
+			<button width="50px" 
+					iconSclass="z-icon-search"
+					tooltiptext="Buscar" 
+					onClick="@command('buscar')"
+					sclass="btn btn-primary btn-sm" />
+		</hlayout>
+		<!-- Resultado de la busqueda -->
+		<listbox model="@load(vm.disenios)" 
+				 hflex="1" vflex="1"
+				 focus="true" 
+	         	 mold="paging"
+	         	emptyMessage="No existen datos">
+			<listhead>
+				<listheader label="Nombre" 			
+							hflex="min"/>
+				<listheader label="Precio" 
+							hflex="min" align="center"/>
+				<listheader label="Descripción" 
+							hflex="1" align="center"/>
+				<listheader label="Foto" 
+							hflex="1" align="center"/>
+				<listheader width="250px" align="center" />
+			</listhead>
+			<!--  Plantilla para elementos por editar -->
+	         <template name="model" var="d">
+	         	<listitem onDoubleClick="@command('editar', disenio=d)">
+	         		<listcell label="@bind(d.nombre)" />
+	         		<listcell label="@bind(d.precio) @converter('formatedNumber', format='###,##0.00')" /> 
+	         		<listcell label="@bind(d.descripcion)" />
+	         		<listcell>
+	         			<image 	content="@load(d.firstPhoto)"
+							    style="border:1px #cccccc solid;" 
+							    height="300px"/>
+	         		</listcell>
+	         		<listcell >
+	         			<div>
+			         		<button iconSclass="z-icon-eye" 
+			         				sclass="btn btn-info btn-sm" 
+			         				onClick="@command('ver', disenio=d)"
+			         				tooltiptext="Ver"
+			         				width="50px"/>
+		         		</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+		</listbox>
+	</vlayout>
+</zk>

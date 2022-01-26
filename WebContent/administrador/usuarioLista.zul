@@ -1,0 +1,66 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+				apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.administrador.UsuarioLista')">
+		<!-- Patron de busqueda -->
+		<hlayout valign="middle" hflex="1" vflex="min">
+			<textbox 	value="@bind(vm.textoBuscar)"
+						placeholder="escriba aqui el texto..." 
+						hflex="1"
+						onOK="@command('buscar')"/>
+			<button width="50px" 
+					iconSclass="z-icon-search"
+					tooltiptext="Buscar" 
+					onClick="@command('buscar')"
+					sclass="btn btn-primary btn-sm" />
+		</hlayout>
+		<!-- Resultado de la busqueda -->
+		<listbox model="@load(vm.usuarios)" 
+				 hflex="1" vflex="1"
+				 focus="true" 
+	         	 mold="paging"
+	         	emptyMessage="No existen datos">
+			<listhead>
+				<listheader label="Usuario" 			
+							hflex="1"/>
+				<listheader label="Identificación" 
+							hflex="min" align="center"/>
+				<listheader label="Nombres" 
+							hflex="min" align="center"/>
+				<listheader label="Apellidos" 
+							hflex="min" align="center"/>
+				<listheader width="250px" align="center">
+	         		<button iconSclass="z-icon-plus" 
+	         				sclass="btn btn-success btn-sm" 
+	         				onClick="@command('nuevo')"
+	         				tooltiptext="Nuevo"
+	         				width="50px"/>
+	         	</listheader>
+			</listhead>
+			<!--  Plantilla para elementos por editar -->
+	         <template name="model" var="u">
+	         	<listitem onDoubleClick="@command('editar', usuario=u)">
+	         		<listcell label="@bind(u.usuario)" />
+	         		<listcell label="@bind(u.persona eq null ? '' : u.persona.identificacion)" /> 
+	         		<listcell label="@bind(u.persona eq null ? '' : u.persona.nombres)" />
+	         		<listcell label="@bind(u.persona eq null ? '' : u.persona.apellidos)" />
+	         		<listcell >
+	         			<div>
+			         		<button iconSclass="z-icon-edit" 
+			         				sclass="btn btn-primary btn-sm" 
+			         				onClick="@command('editar', usuario=u)"
+			         				tooltiptext="Editar"
+			         				width="50px"/>
+			         		<button iconSclass="z-icon-trash" 
+			         				sclass="btn btn-danger btn-sm" 
+			         				onClick="@command('eliminar', usuario=u)"
+			         				tooltiptext="Eliminar"
+			         				width="50px"/>
+		         		</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+		</listbox>
+	</vlayout>
+</zk>

@@ -1,0 +1,67 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+    			apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.diseniador.PedidoLista')">
+    
+		<!-- Patron de busqueda -->
+		<hlayout valign="middle" hflex="1" vflex="min">
+			<combobox selectedItem="@bind(vm.estadoBuscar)"
+					  placeholder="Estado del pedido...">
+    			<comboitem value="C" label="Creado"
+    					   description="Registrado por el administrador"/>
+    			<comboitem value="D" label="Diseñado"
+    					   description="Actualizado por diseñador"/>
+    			<comboitem value="A" label="Aprobado"
+    					   description="Aprobado por el cliente"/>
+    			<comboitem value="R" label="Rechazado"
+    					   description="Rechazado por el cliente"/>
+    			<comboitem value="F" label="Finalizado"
+    					   description="Listo para ser fabricado"/>
+    			<comboitem value="B" label="Fabricado"
+    					   description="Fabricado por los operarios"/>
+    			<comboitem value="P" label="Pagado"
+    					   description="Pagado y facturado"/>
+    		</combobox>
+			<button iconSclass="z-icon-search"  
+					tooltiptext="Buscar" onClick="@command('buscar')" 
+					sclass="btn btn-primary btn-sm" />
+		</hlayout>
+		
+		<!-- Resultado de la busqueda -->
+		
+		<listbox model="@bind(vm.pedidos)" 
+		         hflex="1" vflex="1"
+				 focus="true" 
+	         	 mold="paging"
+	         	emptyMessage="No existen datos">
+	         <listhead sizable="true">
+	         	<listheader label="Cliente" 
+	         				hflex="1"/>
+	         	<listheader label="Observación" 
+	         				hflex="1"/>
+	         	<listheader label="Estado" 
+	         				hflex="min"/>
+	         	<listheader hflex="min"	align="center" />
+	         </listhead>
+	         
+	         <!--  Plantilla para elementos por editar -->
+	         <template name="model" var="p">
+	         	<listitem>
+	         		<listcell label="@bind(p.cliente.persona.nombreCompleto)" />
+	         	    <listcell label="@bind(p.observacion)" />
+	         		<listcell label="@bind(p.estadoPedidoTexto)" /> 
+	         		<listcell >
+	         			<div>
+			         		<button iconSclass="z-icon-pencil" 
+			         				sclass="btn btn-primary btn-sm" 
+			         				onClick="@command('editar', pedido=p)"
+			         				tooltiptext="Editar"
+			         				disabled="@load(p.aprobado or p.diseniado or p.finalizado or p.pagado or p.fabricado)"/>
+		         		</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+		</listbox>
+	</vlayout>
+</zk>

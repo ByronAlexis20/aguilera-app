@@ -1,0 +1,75 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+    			apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.administrador.ParametroLista')">
+    
+		<listbox id="lstDatos" 
+				 model="@bind(vm.parametros) @template(each.id eq vm.idEnEdicion ? 'editando' : 'porEditar')" 
+		         hflex="1" vflex="1" focus="true" 
+		         mold="paging"
+		         emptyMessage="No existen datos">
+	         <listhead sizable="true">
+	         	<listheader label="Nombre"      
+	         				hflex="min" 
+	         				sort="auto(nombre)"/>
+	         	<listheader label="Descripción" 
+	         				hflex="1"
+	         				sort="auto(descripcion)"/>
+	         	<listheader label="Valor" align="center" 
+	         				hflex="min"/>
+	         	<listheader width="150px" align="center"/>
+	         </listhead>
+	         
+	         <!--  Plantilla para elementos por editar -->
+	         <template name="porEditar" var="p">
+	         	<listitem onDoubleClick="@command('editar', parametro=p)" 
+	         	          onClick="@command(vm.parametro eq null?null:'cancelar')">
+	         		<listcell label="@bind(p.nombre)" /> 
+	         		<listcell label="@bind(p.descripcion)" />
+	         		<listcell label="@bind(p.valor) @converter('formatedNumber', format='###,##0.00')" />
+	         		<listcell >
+	         			<div>
+			         		<button iconSclass="z-icon-edit" 
+			         				sclass="btn btn-primary btn-sm" 
+			         				onClick="@command('editar', parametro=p)"
+			         				tooltiptext="Editar"
+			         				width="50px"/>
+		         		</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+	         
+	         <!-- Plantilla para elementos editables -->
+	         <template name="editando" var="p">
+	         	<listitem>
+	         		<listcell>
+	         			<textbox value="@bind(vm.parametro.nombre)" 
+	         					 hflex="1" disabled="true"/>
+	         		</listcell> 
+	         		<listcell>
+	         			<textbox value="@bind(vm.parametro.descripcion)" 
+	         					 hflex="1" disabled="true"/>
+	         		</listcell>
+	         		<listcell>
+	         			<doublebox value="@bind(vm.parametro.valor)" 
+	         					   width="50px" constraint="no empty, no negative"
+	         					   format="###,##0.00"/>
+	         		</listcell> 
+	         		<listcell>
+			         		<button iconSclass="z-icon-save" 
+			         				sclass="btn btn-success btn-sm" 
+			         				onClick="@command('aceptar')" 
+			         				tooltiptext="Aceptar"
+			         				width="50px"/>
+			         		<button iconSclass="z-icon-sign-out" 
+			         				sclass="btn btn-secondary btn-sm" 
+			         				onClick="@command('cancelar')"
+			         				tooltiptext="Cancelar"
+			         				width="50px"/>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+		</listbox>
+	</vlayout>
+</zk>

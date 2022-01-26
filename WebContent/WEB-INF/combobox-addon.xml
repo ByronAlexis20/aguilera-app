@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<language-addon>
+	<!-- Combo personalizado con la capacidad de colocar un elemento en blanco mediante el atributo: withEmptyOption -->
+    <!-- The name of this addon. It must be unique -->
+    <addon-name>combobox</addon-name>
+    <!-- Specifies what other addon this depends
+    <depends></depends>
+    -->
+    <!-- Which language this addon will be added to -->
+    <language-name>xul/html</language-name>
+ 
+	<component>
+	     <component-name>combobox</component-name>
+	     <extends>combobox</extends>
+	     <component-class>com.aguilera.zk.componentes.DaComboBox</component-class>
+	</component>
+</language-addon>

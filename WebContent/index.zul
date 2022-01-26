@@ -1,0 +1,62 @@
+<?page title="Diseños Aguilera" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/img/icono.ico"?>
+<?link rel="icon" type="image/x-icon" href="/img/icono.ico"?>
+<?script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js" ?>
+<?link rel="stylesheet" href="/webjars/font-awesome/5.12.0/css/font-awesome.min.css" ?>
+<?link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" ?>
+<zk>
+	<vlayout	viewModel="@id('vm') @init('com.aguilera.control.Index')"
+	 			apply="org.zkoss.bind.BindComposer" vflex="1" hflex="1">
+	 	<hlayout valign="middle" vflex="min" hflex="1" style="background-color:#a7a7e7">
+	 		<hlayout valign="middle" width="400px" vflex="1">
+	 			<image src="/img/icono.png" height="55px"/>
+				<label 	value="Diseños Aguilera"
+						style="font-size: 1.5em; color: #000000; font-weight: bold;" />
+	 		</hlayout>
+			<hbox hflex="1" vflex="1" pack="end" align="center">
+				<a 	label="@load(vm.usuario)"
+					sclass="badge badge-primary"/>
+				<menubar id="mnMenuPrincipal" orient="horizontal" />
+				<!-- <image content="@load(vm.persona.fotoImagen)" 
+					   height="40px" 
+					   sclass="rounded" 
+					   style="cursor:pointer;"
+					   onClick="@command('perfilUsuario')"
+					   visible="@load(vm.mostrarPerfil)"/> -->
+				<h:form id="f" name="f"
+						action="procesaSalida" 
+						method="POST"
+						xmlns:h="native">
+					<html>
+						<input 	type="hidden"  
+								name="${_csrf.parameterName}" 
+								value="${_csrf.token}"/>
+					</html>
+					<button tooltiptext="Salir"
+							type="submit"
+							iconSclass="z-icon-sign-out"
+							sclass="btn btn-primary btn-sm"
+							width="50px"/>
+				</h:form>
+			</hbox>
+		</hlayout>
+		<tabbox id="tbAreaTrabajo" hflex="1" vflex="1">
+        	<tabs>
+        		<tab iconSclass="z-icon-home" label="Inicio"/>
+        	</tabs>
+        	<tabpanels>
+        		<tabpanel>
+        			<div hflex="1" vflex="1" align="center">
+	        			<include src="dashboard.zul" id="dashboard"/>
+        			</div>
+        		</tabpanel>
+        	</tabpanels>
+        </tabbox>
+        <div align="center">
+		    <hbox hflex="min" vflex="min" pack="center" align="center">
+				<label value="Versión:" />
+				<label value="1.0"/>
+			</hbox>
+		</div>		
+	</vlayout>
+</zk>

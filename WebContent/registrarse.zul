@@ -1,0 +1,138 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Registrarse"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.Registrarse')"
+			hflex="min" vflex="min">
+		<vlayout hflex="min" vflex="min" xmlns:w="client">
+			<grid hflex="min" vflex="min">
+				<columns>
+					<column label="" hflex="min"/>
+					<column label="" hflex="min"/>
+				</columns>
+				<rows>
+					<row>
+						<label 	value="Nombres"
+								style="font-weight: bold;"/>
+						<textbox 	hflex="1" maxlength="45"
+									value="@bind(vm.usuario.persona.nombres)"
+									constraint="no empty"
+									onChange="self.setValue(self.getValue().toUpperCase().trim());">
+							<attribute w:name="doKeyPress_">
+								<![CDATA[
+									function(evt)
+									{
+										if (!this._shallIgnore(evt, "abcdefghijklnmñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ"))
+											this.$doKeyPress_(evt);
+								        }
+								]]>
+							</attribute>
+						</textbox>	
+					</row>
+					<row>
+						<label 	value="Apellidos"
+								style="font-weight: bold;"/>
+						<textbox 	hflex="1" maxlength="45"
+									value="@bind(vm.usuario.persona.apellidos)"
+									onChange="self.setValue(self.getValue().toUpperCase().trim());">
+							<attribute w:name="doKeyPress_">
+								<![CDATA[
+									function(evt)
+									{
+										if (!this._shallIgnore(evt, "abcdefghijklnmñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ"))
+											this.$doKeyPress_(evt);
+								        }
+								]]>
+							</attribute>
+						</textbox>	
+					</row>
+					<row>
+						<label 	value="Identificación"
+								style="font-weight: bold;"/>
+						<textbox 	maxlength="10"
+									value="@bind(vm.usuario.persona.identificacion)"
+									onChange="@command('copiarUsuario')"
+									onOK="@command('copiarUsuario')"
+									constraint="no empty">
+							<attribute w:name="doKeyPress_">
+								<![CDATA[
+									function(evt)
+									{
+										if (!this._shallIgnore(evt, "0123456789"))
+											this.$doKeyPress_(evt);
+								        }
+								]]>
+							</attribute>
+						</textbox>	
+					</row>
+					<row>
+						<label 	value="Dirección"
+								style="font-weight: bold;"/>
+						<textbox 	hflex="1" maxlength="60"
+									value="@bind(vm.usuario.persona.direccion)"
+									constraint="no empty"
+									onChange="self.setValue(self.getValue().toUpperCase().trim());"/>	
+					</row>
+					<row>
+						<label 	value="Correo"
+								style="font-weight: bold;"/>
+						<textbox 	hflex="1" maxlength="45"
+									value="@bind(vm.usuario.persona.correo)"
+									constraint="/.+@.+\.[a-z]+/: No es una dirección de correo, no empty"/>
+					</row>
+					<row>
+						<label 	value="Teléfono"
+								style="font-weight: bold;"/>
+						<textbox	maxlength="10"
+									value="@bind(vm.usuario.persona.telefono)">
+							<attribute w:name="doKeyPress_">
+								<![CDATA[
+									function(evt)
+									{
+										if (!this._shallIgnore(evt, "0123456789"))
+											this.$doKeyPress_(evt);
+								        }
+								]]>
+							</attribute>
+						</textbox>	
+					</row>
+					<row>
+						<label 	value="Usuario"
+								style="font-weight: bold;"/>
+						<textbox	maxlength="45" id="txtUsuario"
+									value="@bind(vm.usuario.usuario)"
+									constraint="no empty"
+									disabled="true"/>	
+					</row>
+					<row>
+						<label 	value="Clave"
+								style="font-weight: bold;"/>
+						<textbox	value="@bind(vm.clave)"
+									type="password"
+									constraint="no empty"/>	
+					</row>
+					<row>
+						<label 	value="Confirmar clave"
+								style="font-weight: bold;"/>
+						<textbox	value="@bind(vm.confirmarClave)"
+									type="password"
+									constraint="no empty"/>	
+					</row>
+				</rows>
+			</grid>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

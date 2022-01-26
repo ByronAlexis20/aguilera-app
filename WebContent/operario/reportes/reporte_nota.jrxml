@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.11.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_factura" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2e4069d-fdd1-4a44-b65a-467339f8bf22">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AGUILERA_APP"/>
+	<parameter name="__RUTA_LOGO__" class="java.lang.String"/>
+	<parameter name="__ID_CABECERA__" class="java.lang.Integer"/>
+	<parameter name="__CLIENTE_NOMBRE__" class="java.lang.String"/>
+	<parameter name="__PEDIDO__" class="java.lang.String"/>
+	<parameter name="__OPERARIO_NOMBRE__" class="java.lang.String"/>
+	<parameter name="__FECHA__" class="java.util.Date"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 	d.nombre AS disenio,
+		nd.cantidad AS cantidad
+FROM da_nota_detalle nd
+INNER JOIN da_disenio d 
+	ON d.id = nd.id_disenio
+WHERE 	nd.estado IS NULL AND 
+		d.estado IS NULL AND
+        nd.id_nota_cabecera = $P{__ID_CABECERA__}]]>
+	</queryString>
+	<field name="disenio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="disenio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="da_disenio"/>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="da_nota_detalle"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="1" width="80" height="72" uuid="26fcc607-c920-4bad-b51d-6b3dc2acaa81"/>
+				<imageExpression><![CDATA[$P{__RUTA_LOGO__}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="80" y="0" width="430" height="22" uuid="7eab7804-004a-4c2a-a015-a5fac0b77343"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISEÑOS AGUILERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="23" width="430" height="22" uuid="c1b925d0-2fda-4d48-b813-1fa1c6a9f252"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SANTA ELENA - ECUADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="46" width="430" height="35" uuid="bd37055b-8ae1-414c-9667-2d5cf5532ed1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[correo: daguilera@gmail.com
+teléfono: 0978654321]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<textField>
+				<reportElement x="250" y="0" width="260" height="30" forecolor="#8F0B09" uuid="e7c89b81-4a75-4ec5-94ca-5c356749a60e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NOTA DE ENTREGA"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="32" width="100" height="22" uuid="9ff70ea1-9106-4105-9a8c-027d659ada6d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="32" width="430" height="22" uuid="7982bf87-28d6-41f5-bc62-f9deeefdf0d7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{__CLIENTE_NOMBRE__}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="55" width="100" height="22" uuid="f0087e78-e871-4545-ae9a-eb98d9118cb8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PEDIDO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="55" width="430" height="22" uuid="8a96e1be-0370-4bbd-ae4b-fa4120e034ce"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{__PEDIDO__}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="8" width="100" height="22" uuid="a41ead2f-6322-453d-aae0-f358035d1882"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="8" width="140" height="22" uuid="c4a11116-a06d-42da-9610-287fd7710680"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DATEFORMAT($P{__FECHA__},"dd-MM-yyyy")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="78" width="100" height="22" uuid="300511ba-f57e-4eff-a4bf-537c6bc05fa7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OPERARIO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="78" width="430" height="22" uuid="833d4005-b30b-4521-8b39-9efb0953df63"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{__OPERARIO_NOMBRE__}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="448" height="22" uuid="ea3fd668-ec5e-43bc-887c-27e322067b2d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="10" width="80" height="22" uuid="25194d2f-734e-4794-bf21-5b64c31b65e8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="ContainerHeight" x="10" y="0" width="448" height="22" uuid="21d8f9f9-59a8-4c26-afc8-9c6167e5122f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disenio}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="ContainerHeight" x="458" y="0" width="80" height="22" uuid="65484ef2-ffcc-4921-81a0-0cebc06b60d3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

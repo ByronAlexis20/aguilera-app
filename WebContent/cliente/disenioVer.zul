@@ -1,0 +1,33 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Visualizador de Diseño"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.cliente.DisenioVer')"
+			width="850px" height="90%">
+		<vbox vflex="1" hflex="1" align="center">
+			<image 	content="@load(vm.imagenActual)"
+					style="border:1px #cccccc solid;" 
+					vflex="1"/>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Anterior" 
+						onClick="@command('anterior')"
+						iconSclass="z-icon-arrow-left"
+						sclass="btn btn-secondary btn-sm"
+						disabled="@load(!vm.tieneAnterior)" 
+						autodisable="true" />
+				<button label="Siguiente" 
+						onClick="@command('siguiente')"
+						iconSclass="z-icon-arrow-right"
+						sclass="btn btn-secondary btn-sm"
+						disabled="@load(!vm.tieneSiguiente)" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vbox>
+	</window>
+</zk>

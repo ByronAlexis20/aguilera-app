@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="aguilera-app">
+		<class>com.aguilera.modelo.Archivo</class>
+		<class>com.aguilera.modelo.Disenio</class>
+		<class>com.aguilera.modelo.DisenioArchivo</class>
+		<class>com.aguilera.modelo.Opcion</class>
+		<class>com.aguilera.modelo.OpcionPrivilegio</class>
+		<class>com.aguilera.modelo.Persona</class>
+		<class>com.aguilera.modelo.Privilegio</class>
+		<class>com.aguilera.modelo.Usuario</class>
+		<class>com.aguilera.modelo.UsuarioPrivilegio</class>
+		<class>com.aguilera.modelo.Cabecera</class>
+		<class>com.aguilera.modelo.Cita</class>
+		<class>com.aguilera.modelo.Detalle</class>
+		<class>com.aguilera.modelo.Pedido</class>
+		<class>com.aguilera.modelo.PedidoDisenio</class>
+		<class>com.aguilera.modelo.Compra</class>
+		<class>com.aguilera.modelo.Producto</class>
+		<class>com.aguilera.modelo.Parametro</class>
+		<class>com.aguilera.modelo.Categoria</class>
+		<class>com.aguilera.modelo.DisenioCategoria</class>
+		<class>com.aguilera.modelo.PedidoProducto</class>
+		<class>com.aguilera.modelo.Medida</class>
+		<class>com.aguilera.modelo.NotaCabecera</class>
+		<class>com.aguilera.modelo.NotaDetalle</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bd_aguilera?serverTimezone=America/Guayaquil" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="admin123" />
+		</properties>
+		
+	</persistence-unit>
+</persistence>

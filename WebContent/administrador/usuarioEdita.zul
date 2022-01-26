@@ -1,0 +1,149 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Edición de usuario"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.administrador.UsuarioEdita')"
+			width="850px" vflex="min">
+		<vlayout vflex="1" hflex="1">
+			<hlayout vflex="1" hflex="1">
+				<tabbox vflex="1" hflex="1">
+					<tabs>
+						<tab iconSclass="z-icon-user" label="Datos personales"/>
+						<tab iconSclass="z-icon-address-book" label="Contacto"/>
+						<tab iconSclass="z-icon-key" label="Seguridad"/>
+					</tabs>
+					<tabpanels>
+						<tabpanel>
+							<vlayout hflex="1" vflex="1">
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Nombres"/>
+									<textbox 	value="@bind(vm.usuario.persona.nombres)"
+												hflex="1" maxlength="45"/>
+									<space/>
+								</hlayout>
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Apellidos"/>
+									<textbox 	value="@bind(vm.usuario.persona.apellidos)"
+												hflex="1" maxlength="45"/>
+									<space/>
+								</hlayout>
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Identificacion"/>
+									<textbox 	value="@bind(vm.usuario.persona.identificacion)"
+												maxlength="10"/>
+								</hlayout>
+							</vlayout>
+						</tabpanel>
+						<tabpanel>
+							<vlayout hflex="1" vflex="1">
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Dirección"/>
+									<textbox 	value="@bind(vm.usuario.persona.direccion)"
+												hflex="1" maxlength="60"/>
+									<space/>
+								</hlayout>
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Teléfono"/>
+									<textbox 	value="@bind(vm.usuario.persona.telefono)"
+												maxlength="10"/>
+								</hlayout>
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Correo"/>
+									<textbox 	value="@bind(vm.usuario.persona.correo)"
+												maxlength="45"/>
+								</hlayout>
+							</vlayout>
+						</tabpanel>
+						<tabpanel>
+							<vlayout hflex="1" vflex="1">
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Usuario"/>
+									<textbox 	value="@bind(vm.usuario.usuario)"
+												maxlength="45"/>
+								</hlayout>
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Clave"/>
+									<textbox 	value="@bind(vm.clave)"
+												maxlength="45"
+												type="password"/>
+								</hlayout>
+								<hlayout hflex="1" valign="middle">
+									<label 	value="Confirmar clave"/>
+									<textbox 	value="@bind(vm.confirmarClave)"
+												maxlength="45"
+												type="password"/>
+								</hlayout>
+							</vlayout>
+						</tabpanel>
+					</tabpanels>
+				</tabbox>
+			</hlayout>
+			<vlayout hflex="1" height="210px">
+				<hlayout hflex="1" vflex="1">
+					<listbox 	model="@bind(vm.privilegiosDisponibles)"
+								selectedItem="@bind(vm.privilegioAgregar)" 
+								mold="paging"
+								hflex="1" vflex="1"
+								emptyMessage="No existen datos">
+						<listhead sizable="true">
+							<listheader	label="Privilegios disponibles"	hflex="1" />
+						</listhead>
+						<template name="model" var="p">
+							<listitem onDoubleClick="@command('agregar')">
+								<listcell label="@bind(p.descripcion)" />
+							</listitem>
+						</template>
+					</listbox>
+					<vbox vflex="1" hflex="min" pack="center" align="center" >
+						<button iconSclass="z-icon-angle-right"
+								onClick="@command('agregar')" 
+								sclass="btn btn-success btn-sm"
+								disabled="@bind(empty vm.privilegioAgregar)" />
+
+						<button iconSclass="z-icon-angle-double-right"
+								onClick="@command('agregarTodo')"
+								sclass="btn btn-success btn-sm"
+								disabled="@bind(empty vm.privilegiosDisponibles)" />
+						<button iconSclass="z-icon-angle-left"
+								onClick="@command('quitar')" 
+								sclass="btn btn-danger btn-sm"
+								disabled="@bind(empty vm.privilegioQuitar)" />
+						<button iconSclass="z-icon-angle-double-left"
+								onClick="@command('quitarTodo')" 
+								sclass="btn btn-danger btn-sm"
+								disabled="@bind(empty vm.privilegiosAsignados)" />						
+					</vbox>
+					<listbox model="@bind(vm.privilegiosAsignados)"
+							selectedItem="@bind(vm.privilegioQuitar)" 
+							mold="paging"
+							autopaging="true" 
+							hflex="1" vflex="1"
+							emptyMessage="No existen datos">
+						<listhead sizable="true">
+							<listheader	label="Privilegios asignados"	
+										hflex="1" />
+						</listhead>
+						<template name="model" var="o">
+							<listitem onDoubleClick="@command('quitar')">
+								<listcell label="@bind(o.descripcion)" />
+							</listitem>
+						</template>
+					</listbox>
+				</hlayout>
+			</vlayout>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Aceptar"
+						iconSclass="z-icon-check" 
+						onClick="@command('aceptar')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Salir"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-primary btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>

@@ -1,0 +1,63 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Selección de Diseño"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.diseniador.DisenioBuscar')"
+			width="90%" height="90%" closable="true">
+		<vlayout 	vflex="1" hflex="1">
+			<!-- Patron de busqueda -->
+			<hlayout valign="middle" hflex="1" vflex="min">
+				<textbox 	value="@bind(vm.textoBuscar)"
+							placeholder="escriba aqui el texto..." 
+							hflex="1"
+							onOK="@command('buscar')"/>
+				<button width="50px" 
+						iconSclass="z-icon-search"
+						tooltiptext="Buscar" 
+						onClick="@command('buscar')"
+						sclass="btn btn-primary btn-sm" />
+			</hlayout>
+			<!-- Resultado de la busqueda -->
+			<listbox model="@load(vm.disenios)" 
+					 hflex="1" vflex="1"
+					 focus="true" 
+		         	 mold="paging"
+		         	emptyMessage="No existen datos">
+				<listhead>
+					<listheader label="Nombre" 			
+								hflex="min"/>
+					<listheader label="Precio" 
+								hflex="min" align="center"/>
+					<listheader label="Descripción" 
+								hflex="1"/>
+					<listheader label="Foto" 
+								width="320px" align="center"/>
+					<listheader width="250px" align="center">
+		         	</listheader>
+				</listhead>
+				<!--  Plantilla para elementos por editar -->
+		         <template name="model" var="d">
+		         	<listitem>
+		         		<listcell label="@bind(d.nombre)" />
+		         		<listcell label="@bind(d.precio) @converter('formatedNumber', format='###,##0.00')" /> 
+		         		<listcell label="@bind(d.descripcion)" />
+		         		<listcell>
+		         			<image 	content="@load(d.firstPhoto)"
+								    style="border:1px #cccccc solid;" 
+								    width="300px"/>
+		         		</listcell>
+		         		<listcell >
+		         			<div>
+				         		<button iconSclass="z-icon-arrow-right" 
+				         				sclass="btn btn-success btn-sm" 
+				         				onClick="@command('agregar', disenio=d)"
+				         				tooltiptext="Agregar"
+				         				width="50px"/>
+			         		</div>
+		         		</listcell>
+		         	</listitem>
+		         </template>
+			</listbox>
+		</vlayout>
+	</window>
+</zk>

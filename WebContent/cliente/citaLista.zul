@@ -1,0 +1,156 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vlayout 	vflex="1" hflex="1"
+    			apply="org.zkoss.bind.BindComposer"
+				viewModel="@id('vm') @init('com.aguilera.control.cliente.CitaLista')">
+	
+		<!-- Patron de busqueda -->
+		<hlayout valign="middle" hflex="1" vflex="min">
+			<datebox value="@bind(vm.fechaBuscar)" format="dd/MM/yyyy" 
+					 placeholder="fecha de cita..."/>
+			<combobox selectedItem="@bind(vm.tipoBuscar)"
+					  placeholder="Tipo de cita...">
+    			<!-- <comboitem value="E" label="Entrevista"/> -->
+    			<comboitem value="T" label="Toma de medidas"/>
+    		</combobox>
+    		<combobox selectedItem="@bind(vm.estadoBuscar)"
+    				  placeholder="Estado de cita...">
+    			<comboitem value="P" label="Pendiente"/>
+    			<comboitem value="E" label="Ejecutada"/>
+    			<comboitem value="L" label="Perdida"/>
+    		</combobox>
+			<button iconSclass="z-icon-search"  
+					tooltiptext="Buscar" onClick="@command('buscar')" 
+					sclass="btn btn-primary btn-sm" />
+		</hlayout>
+		
+		<!-- Resultado de la busqueda -->
+		
+		<listbox id="lstDatos" 
+				 model="@bind(vm.citas) @template(each.id eq vm.idEnEdicion ? 'editando' : 'porEditar')" 
+		         hflex="1" vflex="1" focus="true" 
+		         mold="paging"
+		         emptyMessage="No existen datos!">
+	         <listhead sizable="true">
+	         	<listheader label="Fecha" 
+	         				hflex="min" align="center"
+	         				sort="auto(fecha)"/>
+	         	<listheader label="Hora Inicio" 
+	         				hflex="min" align="center"
+	         				sort="auto(horaInicio)"/>
+	         	<listheader label="Hora Fin" 
+	         				hflex="min" align="center"
+	         				sort="auto(horaFin)"/>
+	         	<listheader label="Tipo" 
+	         				hflex="min" align="center"/>
+	         	<listheader label="Estado" 
+	         				hflex="1"/>
+	         	<listheader width="100px"	align="center">
+	         		<button iconSclass="z-icon-plus" 
+	         				sclass="btn btn-success btn-sm" 
+	         				onClick="@command('nuevo')"
+	         				tooltiptext="Nuevo"/>
+	         	</listheader>
+	         </listhead>
+	         
+	         <!--  Plantilla para elementos por editar -->
+	         <template name="porEditar" var="c">
+	         	<listitem onDoubleClick="@command('editar', cita=c)" 
+	         	          onClick="@command(vm.cita eq null?null:'cancelar')">
+	         	    <listcell label="@bind(c.fecha) @converter('formattedDate', format='dd/MM/yyyy')" />
+	         		<listcell label="@bind(c.horaInicio) @converter('formattedDate', format='HH:mm')" />
+	         		<listcell label="@bind(c.horaFin) @converter('formattedDate', format='HH:mm')" />
+	         		<listcell label="@bind(c.tipoTexto)"/>
+	         		<listcell label="@bind(c.estadoCitaTexto)"/> 
+	         		<listcell >
+	         			<div>
+			         		<button iconSclass="z-icon-edit" 
+			         				sclass="btn btn-primary btn-sm" 
+			         				onClick="@command('editar', cita=c)"
+			         				tooltiptext="Editar"
+			         				disabled="@load(!c.pendienteCliente)"/>
+			         		<button iconSclass="z-icon-trash" 
+			         				sclass="btn btn-danger btn-sm" 
+			         				onClick="@command('eliminar', cita=c)"
+			         				tooltiptext="Eliminar"
+			         				disabled="@load(!c.pendienteCliente)"/>
+		         		</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+	         
+	         <!-- Plantilla para elementos editables -->
+	         <template name="editando" var="c">
+	         	<listitem>
+	         		<listcell>
+	         			<hbox hflex="min" vflex="1">
+		         			<datebox value="@bind(vm.cita.fecha)"
+		         				     onChange="@command('cargarCitasPorFecha')"
+		         				     onOK="@command('cargarCitasPorFecha')"
+		         					 constraint="no empty, no past, no today"
+		         					 focus="true" format="dd/MM/yyyy"
+		         					 onCancel="@command('cancelar')"/>
+			         		<a 	popup="ppCitas, position=after_end" 
+								sclass="btn btn-info btn-sm" 
+								iconSclass="z-icon-eye" tooltiptext="Ver Citas"/>
+			         	</hbox>
+	         		</listcell>
+	         		<listcell>
+	         			<timebox value="@bind(vm.cita.horaInicio)"  
+	         					 constraint="between 080000 and 150000, no empty"
+	         					 format="short"
+	         					 onChange="@command('calcularHoraFin')"
+	         					 onCancel="@command('cancelar')"/>
+	         		</listcell>
+	         		<listcell>
+	         			<timebox value="@bind(vm.cita.horaFin)"  
+	         					 disabled="true"
+	         					 format="short"/>
+	         		</listcell>
+	         		<listcell>
+	         			<combobox selectedItem="@bind(vm.cita.tipo)">
+			    			<!-- <comboitem value="E" label="Entrevista"/> -->
+			    			<comboitem value="T" label="Toma de medidas"/>
+			    		</combobox>
+	         		</listcell>
+	         		<listcell label="@bind(vm.cita.estadoCitaTexto)"/>
+	         		<listcell>
+	         			<div>
+			         		<button iconSclass="z-icon-save" 
+			         				sclass="btn btn-success btn-sm" 
+			         				onClick="@command('aceptar')" 
+			         				tooltiptext="Aceptar"/>
+			         		<button iconSclass="z-icon-sign-out" 
+			         				sclass="btn btn-secondary btn-sm" 
+			         				onClick="@command('cancelar')"
+			         				tooltiptext="Salir"/>
+			         	</div>
+	         		</listcell>
+	         	</listitem>
+	         </template>
+		</listbox>
+		<popup id="ppCitas" 
+			vflex="min" width="200px" 
+			sclass="border-0" >
+			<vbox hflex="1" vflex="1" align="center" pack="center">
+				<listbox model="@load(vm.citasPorFecha)" 
+						 hflex="1" vflex="1"
+			         	emptyMessage="No existen datos">
+					<listhead>
+						<listheader label="Inicio" 			
+									hflex="min" align="center"/>
+						<listheader label="Fin" 
+									hflex="min" align="center"/>
+					</listhead>
+					<!--  Plantilla para elementos por editar -->
+			         <template name="model" var="c">
+			         	<listitem>
+			         		<listcell label="@bind(c.horaInicio) @converter('formattedDate', format='HH:mm')" />
+	         				<listcell label="@bind(c.horaFin) @converter('formattedDate', format='HH:mm')" />
+			         	</listitem>
+			         </template>
+				</listbox>
+			</vbox>
+		</popup>
+	</vlayout>
+</zk>

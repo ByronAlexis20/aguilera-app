@@ -1,0 +1,73 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window border="none"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.aguilera.control.operario.NotaVer')"
+			width="50%" height="80%">
+		<vlayout vflex="1" hflex="1">
+			<vlayout hflex="1" vflex="min">
+				<vbox hflex="1" align="center">
+					<label 	value="DISEÑOS AGUILERA"/>
+					<label 	value="La libertad - Santa Elena"/>
+					<label 	value="diseniosaguilera@gmail.com"/>
+					<label 	value="NOTA DE ENTREGA"/>
+					<space/>
+				</vbox>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Cliente"/>
+					<textbox 	value="@load(vm.notaCabecera.pedido.cliente.persona.nombreCompleto)"
+								hflex="1" 
+								disabled="true"/>
+					<space/>
+				</hlayout>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Pedido"/>
+					<textbox 	value="@load(vm.notaCabecera.pedido.detalle)"
+								hflex="1"
+								disabled="true"/>
+					<space/>
+				</hlayout>
+				<hlayout hflex="1" valign="middle">
+					<label 	value="Operario"/>
+					<textbox 	value="@load(vm.notaCabecera.operario.persona.nombreCompleto)"
+								hflex="1"
+								disabled="true"/>
+					<space/>
+				</hlayout>
+			</vlayout>
+			<separator/>
+			<vlayout hflex="1" vflex="1">
+				<listbox model="@bind(vm.notaDetalles)" 
+						mold="paging"
+						hflex="1" vflex="1"
+						emptyMessage="No existen datos">
+					<listhead sizable="true">
+						<listheader	label="Diseño"	
+									hflex="1" />
+						<listheader	label="Cantidad" align="center"	
+									hflex="min" />
+					</listhead>
+					<template name="model" var="o">
+						<listitem>
+							<listcell label="@load(o.disenio.nombre)"/>
+							<listcell label="@load(o.cantidad)"/>
+						</listitem>
+					</template>
+				</listbox>
+			</vlayout>
+			<!-- Botones de acción -->
+			<div align="right" hflex="1" vflex="min">
+				<button label="Guardar e Imprimir"
+						iconSclass="z-icon-print" 
+						onClick="@command('imprimir')"
+						sclass="btn btn-success btn-sm" 
+						autodisable="true" />
+				<button label="Cancelar"
+						iconSclass="z-icon-sign-out" 
+						onClick="@command('salir')"
+						sclass="btn btn-danger btn-sm" 
+						autodisable="true" />
+			</div>
+		</vlayout>
+	</window>
+</zk>
